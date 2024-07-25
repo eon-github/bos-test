@@ -1,11 +1,11 @@
 [
   {
     "name": "session",
-    "value": "4774007e-373b-420e-9afe-89ebd68da396",
+    "value": "08764624-4add-4cce-ac24-7830798f429a",
     "path": "/",
     "secure": false,
     "httpOnly": true,
-    "expiry": 1723711636.452987,
+    "expiry": 2044961302.526,
     "domain": "localhost",
     "sameSite": "strict"
   }

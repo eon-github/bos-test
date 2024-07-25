@@ -4,17 +4,21 @@ describe('Test Site', () => {
     cy.viewport(1920, 1080); // Set the viewport size
   
     // Restore cookies if available
-    cy.restoreCookies();
-  
-    // Perform login if cookies are not available
-    cy.getCookie('session').then((cookie) => {
-      if (!cookie) {
-        cy.login();
-      }
+    cy.restoreCookies().then(() => {
+      // Check if the session cookie is present
+      cy.getCookie('session').then((cookie) => {
+        if (!cookie) {
+          // No cookies available, so perform login
+          cy.login();
+        }
+      }).then(() => {
+        // Visit the page and check for visibility of an element
+        cy.visit('/');
+        cy.contains(/Board/i).should('be.visible');
+      });
     });
-    cy.visit('/');
-    cy.contains(/Board/i).should('be.visible');
   });
+  
 
   it('Test Tickets', () => {
 
