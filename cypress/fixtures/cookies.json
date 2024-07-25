@@ -1,0 +1,12 @@
+[
+  {
+    "name": "session",
+    "value": "4774007e-373b-420e-9afe-89ebd68da396",
+    "path": "/",
+    "secure": false,
+    "httpOnly": true,
+    "expiry": 1723711636.452987,
+    "domain": "localhost",
+    "sameSite": "strict"
+  }
+]

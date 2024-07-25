@@ -27,3 +27,40 @@
 Cypress.Commands.add('getDataTest', (dataTestSelector) =>{
     return cy.get(`[data-test="${dataTestSelector}"]`)
 })
+
+Cypress.Commands.add('login', () => {
+    cy.visit('login'); // Visit the login page
+    cy.url().should('include', 'login'); // Ensure you’re on the login page
+    cy.contains(/Welcome to BusinessOS/i).should('be.visible'); // Verify the welcome message
+  
+    cy.intercept('POST', '/login').as('loginRequest'); // Intercept the login request
+  
+    // Type the login credentials and submit the form
+    cy.get('[data-test="login"]').type('test@gmail.com');
+    cy.get('[data-test="password"]').type('adminadmin');
+    cy.get('[data-test="login-button"]').click();
+  
+    // Wait for the login request to complete
+    cy.wait('@loginRequest');
+  
+    // Verify that the user has been redirected to the board
+    cy.contains(/Board/i).should('be.visible');
+  
+    // Save cookies to a file
+    cy.getCookies().then((cookies) => {
+      cy.writeFile('cypress/fixtures/cookies.json', cookies);
+    });
+  });
+
+  Cypress.Commands.add('restoreCookies', () => {
+    cy.readFile('cypress/fixtures/cookies.json').then((cookies) => {
+      cookies.forEach((cookie) => {
+        cy.setCookie(cookie.name, cookie.value, {
+          domain: cookie.domain,
+          path: cookie.path,
+          secure: cookie.secure,
+        });
+      });
+    });
+  });
+  
